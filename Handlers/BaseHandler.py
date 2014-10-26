@@ -3,9 +3,13 @@ import jinja2
 import logging
 import urlparse
 
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'), autoescape = True)
+jinja_env = jinja2.Environment(
+    loader=jinja2.FileSystemLoader('templates'),
+    autoescape=True)
+
 
 class BaseHandler(webapp2.RequestHandler):
+
     """ BaseHandler, generic helper functions and user handling """
 
     def write(self, *a, **kw):
@@ -29,4 +33,4 @@ class BaseHandler(webapp2.RequestHandler):
         # webapp2 does not handle utf-8json encoding from facebook
         if self.request.charset == 'utf-8json':
             self.request.charset = 'utf-8'
-        self.params = {} # parameters to pass to template renderer
+        self.params = {}  # parameters to pass to template renderer

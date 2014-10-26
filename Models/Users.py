@@ -10,12 +10,22 @@ class PHUser(ndb.Model):
 
     @classmethod
     def by_id(cls, id):
-        c = cls.query(cls.id == id)
+        c = cls.query(cls.id == id).get()
         return c
     
     @classmethod
     def key_by_id(cls, id):
         c = cls.query(cls.id == id).get(keys_only=True)
+        return c
+
+    @classmethod
+    def newest(cls):
+        c = cls.query().order(-cls.id).get()
+        return c
+
+    @classmethod
+    def oldest(cls):
+        c = cls.query().order(cls.id).get()
         return c
         
     @classmethod
@@ -27,3 +37,7 @@ class PHUser(ndb.Model):
     def by_name(cls, name):
         c = cls.query(cls.name == name)
         return c
+        
+class DumpObject(ndb.Model):
+    dump = ndb.JsonProperty()
+    count = ndb.IntegerProperty()

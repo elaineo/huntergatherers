@@ -35,9 +35,6 @@ builtins:
 - deferred: on
 #- appstats: on
 
-inbound_services:
-- mail
-
 skip_files:
 - ^(.*/)?\.bak$
 
