@@ -7,20 +7,26 @@ from data.globallinks import globallinks
 from data.links import littlelinks
 from data.people import people
 import time
+from google.appengine.api import memcache
 
 class Gatherer(BaseHandler):
     def get(self, action):
         if action=='f':
             self.__followers()
         elif action=='bb':
-            self.__buttbuddies()
+            username = self.request.get('username')
+            nodes = memcache.get(username)
+            if not nodes:            
+                nodes = self.__buttbuddies(username)
+                memcache.add(key=username, value=nodes)
+            self.write(nodes)
 
-    def __buttbuddies(self):
-        username = self.request.get('username')
+    def __buttbuddies(self, username):        
         user = PHUser.by_username(username).get()
         if not user:
             self.write('User not found')
             return
+        center = {'name':username, 'id':user.id}
         links = littlelinks
         # only pick out ppl directly connected
         linkfilter = []
@@ -54,8 +60,10 @@ class Gatherer(BaseHandler):
             nodedump.append({'name': p, 'id': n})
         logging.info(time.time())
         nodeindex = [n['id'] for n in nodedump]
+        centerindex = nodeindex.index(center['id'])
+        logging.info(centerindex)
         linkdump = sortlinks(nodeindex, linkfilter)
-        self.write(json.dumps({'nodes':nodedump, 'links':linkdump}))
+        return json.dumps({'nodes':nodedump, 'links':linkdump, 'center':center, 'centerindex': centerindex})
 
 
     def __followers(self):
