@@ -4,6 +4,7 @@ import json
 from Populate import *
 from Models.Users import *
 from data.everybody import everybody
+from data.people import people
 
 class ActionHandler(BaseHandler):
     def get(self, action):
@@ -16,19 +17,7 @@ class ActionHandler(BaseHandler):
             #nodes = nodes_to_dict()
             self.write(json.dumps(everybody))
         elif action=='dumpusers':
-            users,cursor,more = PHUser.query().order(-PHUser.id).fetch_page(1000)
-            dump = {}
-            count = 0            
-            for u in users:
-                dump[str(u.id)] = {'username': u.name}
-            d = DumpObject(dump=dump, count=count).put()
-            while more:
-                dump = {}
-                count = count+1
-                users,cursor,more = PHUser.query().order(-PHUser.id).fetch_page(1000, start_cursor=cursor)
-                for u in users:
-                    dump[str(u.id)] = {'username': u.name}
-                d = DumpObject(dump=dump, count=count).put()
+            self.write(people)
         elif action=='dumpff':
             users = PHUser.query()
             dump = {}
@@ -40,7 +29,5 @@ class ActionHandler(BaseHandler):
                     d['following'] = [f.get().id for f in u.following]
                 dump.append(d)
             d = DumpObject(dump = dump).put()
-        elif action=='viewusers':
-            
         else:
             populate_follower(action)

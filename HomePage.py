@@ -6,7 +6,6 @@ from google.appengine.api import taskqueue
 class HomePage(BaseHandler):
     """ Home page, first page shown """
     def get(self):
-        taskqueue.add(url='/actions/dumpusers', method='get')
         self.render('home.html', **self.params)
 
 class TestPage(BaseHandler):

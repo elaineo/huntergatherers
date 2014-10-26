@@ -2,7 +2,7 @@ import logging
 import json
 import requests
 from Models.Users import *
-from data.links import links
+from data.links import littlelinks
 from data.nodes import nodes
 from data.everybody import everybody
 

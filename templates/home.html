@@ -11,16 +11,17 @@
   font: 10px sans-serif;
 }
 
+body {
+
+  text-align: center;
+}
+
 </style>
 <script type="text/javascript" src="/static/jquery-1.11.1.min.js"></script>
 <body>
-<h1>Hunter Gatherers</h1>
-Enter a username: 
-<input type="text" id='username' name="username" placeholder='eriktorenberg'><br>
-<input type="radio" name="follow" value='0'> Filter by Followers
-<input type="radio" name="follow" value='1' checked> All Butt-Buddies
-
-<button id='submitBtn'>Submit</button>
+<h1>Hunter Gatherer</h1>
+Enter a username (case-sensitive):
+<input type="text" id='username' name="username" placeholder='eriktorenberg'><button id='submitBtn'>Submit</button>
 <div id='dumpgraph'>
 On initial load, dump ryan hoover's circle jerk<br>
 add error handlers for missing users
@@ -32,7 +33,7 @@ $('#submitBtn').click( function(event){
   event.preventDefault();
   $("#dumpgraph").html('');
   username = $('input#username').val();
-  follow = $("input[name=follow]:checked").val();
+  //follow = $("input[name=follow]:checked").val();
   dumpgraph('/gather/bb?username='+username);
   //dumpgraph('/gather/f?username='+username);
   $('input#username').val('');

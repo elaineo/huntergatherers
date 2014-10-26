@@ -10,7 +10,7 @@ class PHUser(ndb.Model):
 
     @classmethod
     def by_id(cls, id):
-        c = cls.query(cls.id == id).get()
+        c = cls.query(cls.id == id).get_async()
         return c
     
     @classmethod

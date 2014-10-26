@@ -3,7 +3,10 @@ import logging
 import json
 from Populate import *
 from Models.Users import *
-from data.globallinks import links
+from data.globallinks import globallinks
+from data.links import littlelinks
+from data.people import people
+import time
 
 class Gatherer(BaseHandler):
     def get(self, action):
@@ -11,36 +14,50 @@ class Gatherer(BaseHandler):
             self.__followers()
         elif action=='bb':
             self.__buttbuddies()
-            
+
     def __buttbuddies(self):
         username = self.request.get('username')
         user = PHUser.by_username(username).get()
         if not user:
             self.write('User not found')
             return
-        # only pick out ppl directly connected 
-        linkfilter = []        
+        links = littlelinks
+        # only pick out ppl directly connected
+        linkfilter = []
         for l in links:
             if int(l[0])==user.id or int(l[1])==user.id:
                 linkfilter.append(l)
-        nodes = []  
+                
+        if len(linkfilter) < 5:
+            links = globallinks
+            for l in links:
+                if int(l[0])==user.id or int(l[1])==user.id:
+                    linkfilter.append(l)
+        nodes = []
         for l in linkfilter:
             if int(l[0]) not in nodes:
                 nodes.append(int(l[0]))
             if int(l[1]) not in nodes:
                 nodes.append(int(l[1]))
-        usernodes = [PHUser.by_id(n) for n in nodes]
+        logging.info(time.time())
         # filter links again
+        if len(nodes) > 1000:
+            links = littlelinks        
         linkfilter = []
         for l in links:
             if int(l[0]) in nodes and int(l[1]) in nodes:
-                linkfilter.append(l)        
-        nodedump = [{'name': nd.username, 'id': nd.id} for nd in usernodes]
+                linkfilter.append(l)
+        logging.info(time.time())
+        nodedump = []
+        for n in nodes:
+            p = people.get(n)
+            nodedump.append({'name': p, 'id': n})
+        logging.info(time.time())
         nodeindex = [n['id'] for n in nodedump]
         linkdump = sortlinks(nodeindex, linkfilter)
         self.write(json.dumps({'nodes':nodedump, 'links':linkdump}))
-        
-        
+
+
     def __followers(self):
         self.response.headers['Content-Type'] = "application/json"
         data = json.loads(self.request.body)
