@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script type="text/javascript" src="/static/jquery-1.11.1.min.js"></script>
+<head>
+<link rel="stylesheet" href="/static/d.css">
+ <style>
+ body{
+ font-family: 'proxima-nova', 'Proxima Nova', sans-serif;
+ margin:5% 10% 0 10%;
+ }
+ a {
+  text-decoration: None;
+  color: #cc3333;
+}
+ </style>
+</head>
+<body>
+<div class='head'>
+<div style='float: left; width:20%;height:100%'><a href='/'><img style='width:100%' src='/static/logo.png'></a></div>
+<div style='margin-left:25%'>
+<h1>About Hunter Gatherer</h1>
+</div>
+<br>
+<div style='clear:both'>
+<h2>What am I looking at?</h2>
+Product Hunt is a community-driven platform. Hunter Gatherer is a tool to explore key influencers in your community who can help your product succeed.
+<h2>How is this information useful to me?</h2>
+You can maximize the number of votes for your product if it is posted by someone with high community reputation. The graphs help you identify the biggest clusters of influencers in your network.
+<h2>Who are you monsters?</h2>
+<p>We are the team behind <a href='http://sandhill.exchange'>Sand Hill Exchange</a>, a fantasy stock exchange for startups. 
+</p>
+<h2>How are these graphs generated?</h2>
+<p>We compile a list of posts and votes for each individual. The networks are determined by whom you have voted for, and who has voted for your posts. </p>
+<p>Tighter connections indicate that two nodes have voted for each others' posts a lot. In the example below, <a href='http://www.producthunt.com/hunterwalk' target='_blank'>hunterwalk</a> and <a href='http://www.producthunt.com/rrhoover' target='_blank'>rrhoover</a> have a very tight connection, but <a href='http://www.producthunt.com/eriktorenberg' target='_blank'>eriktorenberg</a> is farther away from hunterwalk. If eriktorenberg wants to get hunterwalk's attention, he should have rrhoover post his product :)
+</p>
+<img src='/static/exgraph.png'>
+<p>
+If we explore rrhoover's network below, we see that he has a giant cluster of highly-connected followers, and then a bunch of fanboys floating at the outskirts of his network (at the top of the graph).
+</p>
+<img src='/static/rrhoover.png'>
+<p>Thank you for visiting Hunter Gatherer!</p>
+</div>
+</body>
+</html>

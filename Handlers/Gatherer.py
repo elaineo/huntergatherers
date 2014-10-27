@@ -45,7 +45,6 @@ class Gatherer(BaseHandler):
                 nodes.append(int(l[0]))
             if int(l[1]) not in nodes:
                 nodes.append(int(l[1]))
-        logging.info(time.time())
         # filter links again
         if len(nodes) > 1000:
             links = littlelinks        
@@ -53,15 +52,12 @@ class Gatherer(BaseHandler):
         for l in links:
             if int(l[0]) in nodes and int(l[1]) in nodes:
                 linkfilter.append(l)
-        logging.info(time.time())
         nodedump = []
         for n in nodes:
             p = people.get(n)
             nodedump.append({'name': p, 'id': n})
-        logging.info(time.time())
         nodeindex = [n['id'] for n in nodedump]
         centerindex = nodeindex.index(center['id'])
-        logging.info(centerindex)
         linkdump = sortlinks(nodeindex, linkfilter)
         return json.dumps({'nodes':nodedump, 'links':linkdump, 'center':center, 'centerindex': centerindex})
 

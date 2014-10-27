@@ -1,7 +1,12 @@
+$(document).ready(function(){
+    dumpgraph('/gather/bb?username=rrhoover');
+});
+
 $('#submitBtn').click( function(event){
   event.preventDefault();
   username = $('input#username').val();
-  $("#dumpgraph").html('Loading '+username+'...');
+  $('#curruser').html(username);
+  $("#dumpgraph").html('');
   //follow = $("input[name=follow]:checked").val();
   dumpgraph('/gather/bb?username='+username);
   //dumpgraph('/gather/f?username='+username);
@@ -10,15 +15,15 @@ $('#submitBtn').click( function(event){
 // "/actions/json"
 function dumpgraph(linkpile) {
 
-var width = 960,
-    height = 500
+var width = $('#outergraph').width(),
+    height = $('#outergraph').height()
 
 var svg = d3.select("#dumpgraph").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 var force = d3.layout.force()
-    .gravity(.01)
+    .gravity(.05)
     .distance(100)
     .charge(-100)
     .size([width, height]);
@@ -35,7 +40,7 @@ function update(root) {
   console.log(root);
   root.nodes[root.centerindex].fixed = true;
   root.nodes[root.centerindex].x = width/2;
-  root.nodes[root.centerindex].y = height=2;
+  root.nodes[root.centerindex].y = height/2;
   force
       .nodes(root.nodes)
       .links(root.links)
@@ -80,6 +85,7 @@ function update(root) {
 function click(d) {
   if (d3.event.defaultPrevented) return; // ignore drag
   console.log(d.name);
-  $("#dumpgraph").html('Loading '+d.name+'...');
+  $('#curruser').html('<a href="http://www.producthunt.com/'+d.name+'" target="_blank">'+d.name+'</a>');
+  $("#dumpgraph").html('');
   dumpgraph('/gather/bb?username='+d.name);
 }

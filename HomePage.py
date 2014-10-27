@@ -8,6 +8,11 @@ class HomePage(BaseHandler):
     def get(self):
         self.render('home.html', **self.params)
 
+class InfoPage(BaseHandler):
+    """ Home page, first page shown """
+    def get(self):
+        self.render('about.html', **self.params)
+        
 class TestPage(BaseHandler):
     def get(self):
         """ dump list of user ids and respective followers, followees

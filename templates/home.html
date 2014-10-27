@@ -1,26 +1,33 @@
 <!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <script type="text/javascript" src="/static/jquery-1.11.1.min.js"></script>
 <head>
+<link rel="stylesheet" href="/static/d.css">
  <link rel="stylesheet" type="text/css" href="/static/hg.css">
 </head>
 <body>
 <div class='head'>
-<div style='float: left;'><img src='/static/logo.png'></div>
-<h2>Who in your network kills it on Product Hunt?</h2>
+<div style='float: left; width:20%;height:100%;margin:20px 20px 0 0;text-align:center'><img style='width:100%' src='/static/logo.png'><br><br>
+<a href='/about'>What am I looking at?</a></div>
+<div style='margin-left:25%'>
+<h1>Who kills it on Product Hunt?</h1>
 
 Enter a username (case-sensitive):
-<input type="text" id='username' name="username" placeholder='eriktorenberg'><button id='submitBtn'>Submit</button>
+<input type="text" id='username' name="username"><button class='btn' id='submitBtn'>Submit</button><br>
+<b>Now loading: <span id='curruser'><a href='http://www.producthunt.com/rrhoover' target='_blank'>rrhoover</a></span></b><br>
+<span class='mini'>
+Hint: click on a node to expand that user's graph. 
+Drag a node to move it.
+</span>
+</div>
 </div>
 <div id='outergraph'>
-  <div id='innergraph'>
-
-<div id='dumpgraph'>
-On initial load, dump ryan hoover's circle jerk<br>
-add error handlers for missing users
+  
+<div id='dumpgraph'></div>
 </div>
-
-</div>
-</div>
+<br><br>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src='/static/dumpgraph.js'></script>
+</body>
+</html>
